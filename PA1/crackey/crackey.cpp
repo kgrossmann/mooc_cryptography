@@ -1,5 +1,5 @@
 //============================================================================
-// Name        : crack_key_len.cpp
+// Name        : crackkey.cpp
 // Author      : Klemens Grossmann
 // Version     : V 2.0
 // Copyright   : Your copyright notice
@@ -75,7 +75,7 @@ float CalculateScoreFromHistogram(std::map<unsigned int,unsigned int>* histogram
 			   float real_probabilty = it->second/(float)letters_total;
 			   fdistributinScore += real_probabilty*real_probabilty;
 		   }  else {
-			   //an allowed plainttext character was created by decrypting the current trial key or trial key character
+			   //an unallowed plainttext character was created by decrypting the current trial key or trial key character
 			   //this result in a score of 0.0, in order to have those invalid trials keys weeded out
 			   return 0.0;
 		   }
