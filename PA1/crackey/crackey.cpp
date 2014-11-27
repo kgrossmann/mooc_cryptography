@@ -13,6 +13,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
+#include <algorithm>  // std::min
 //
 using namespace std;
 
@@ -37,7 +38,7 @@ std::map<unsigned int,unsigned int>* CreateInitializeHistogram() {
 //
 std::map<unsigned int,CHARLIST>* CreateInitializeKeyCharacters(unsigned int keylen) {
 	std::map<unsigned int,CHARLIST>* keyscharacters = new std::map<unsigned int,CHARLIST>;
-	for(int i=1;i<=keylen;i++) {
+	for(unsigned int i=1;i<=keylen;i++) {
 		CHARLIST charlist;
 		keyscharacters->insert(pair<unsigned int,CHARLIST>(i,charlist));
 	}
@@ -84,27 +85,28 @@ float CalculateScoreFromHistogram(std::map<unsigned int,unsigned int>* histogram
    return (fdistributinScore);
 }
 //
-void DecryptByKeyAndPrint(std::map<unsigned int,unsigned int>* key) {
+void DecryptByKeyAndPrint(std::map<unsigned int,unsigned int>* key,FILE* pfile=NULL) {
     FILE* cfile  = fopen(CFILE,"r");
-    FILE* pfile  = fopen(PFILE,"w");
-    if((pfile==NULL) || (cfile==NULL)) {
+    if(cfile==NULL) {
     	printf("File error!\n");
+    	assert(false);
     	return;
     }
     unsigned int letters_total = 0;
     std::map<unsigned int,unsigned int>* histogram = CreateInitializeHistogram();
+
     std::cout << "-----------------------------------------------------------------\n";
    	sprintf(msgbuf,"%s","Ciphertext decrypted by key ");
-   	fprintf(pfile,"%s",msgbuf);
+   	if(pfile) fprintf(pfile,"%s",msgbuf);
    	std::cout << msgbuf;
-    for(int i=1;i<=key->size();i++)	{
+    for(unsigned int i=1;i<=key->size();i++)	{
 		sprintf(msgbuf,"%02X",(*key)[i]);
 		std::cout << msgbuf;
-		fprintf(pfile,"%s",msgbuf);
+		if(pfile) fprintf(pfile,"%s",msgbuf);
     }
-    sprintf(msgbuf,"%s","\n");
+    sprintf(msgbuf,"%s",":\n");
     std::cout << msgbuf;
-    fprintf(pfile,"%s",msgbuf);
+    if(pfile) fprintf(pfile,"%s",msgbuf);
     //
     int i=0;
     unsigned char ch;
@@ -116,30 +118,30 @@ void DecryptByKeyAndPrint(std::map<unsigned int,unsigned int>* key) {
     	plainchar = (int)ch^keychar;
     	sprintf(msgbuf,"%c",plainchar);
     	std::cout << msgbuf;
-    	fprintf(pfile,"%s",msgbuf);
+    	if(pfile) fprintf(pfile,"%s",msgbuf);
     	(*histogram)[plainchar]++;
         letters_total++;
     }
+
     sprintf(msgbuf,"%s","\n");
     std::cout << msgbuf;
-    fprintf(pfile,"%s",msgbuf);
+    if(pfile) fprintf(pfile,"%s",msgbuf);
 
     float fdistributinScore = CalculateScoreFromHistogram(histogram,letters_total);
     delete histogram;
 
     sprintf(msgbuf,"Score : %f",fdistributinScore);
     std::cout << msgbuf;
-    fprintf(pfile,"%s",msgbuf);
+    if(pfile) fprintf(pfile,"%s",msgbuf);
     sprintf(msgbuf,"%s","\n");
     std::cout << msgbuf;
-    fprintf(pfile,"%s",msgbuf);
-    fclose(pfile);
+    if(pfile) fprintf(pfile,"%s",msgbuf);
+
     fclose(cfile);
 }
 //
 unsigned int IterateThroughPromisingKeysAndShowStats(std::map<unsigned int,unsigned int>* promisingkeys) {
 	unsigned int iBestKeyIndex=0;
-	float fbestScore = 0.0;
 	std::cout << "-----------------------------------------------------------------\n";
 	for (std::map<unsigned int,unsigned int>::iterator it=promisingkeys->begin();it!=promisingkeys->end();it++) {
 		if(it->second>0) {
@@ -150,28 +152,28 @@ unsigned int IterateThroughPromisingKeysAndShowStats(std::map<unsigned int,unsig
 	return iBestKeyIndex;
 }
 //
-void IterateThroughKeysAndDecrypt(std::map<unsigned int,CHARLIST>* keyscharacters, unsigned int keylen,std::map<unsigned int,unsigned int>* characters_so_far) {
+void IterateThroughKeysAndDecrypt(std::map<unsigned int,CHARLIST>* keyscharacters, unsigned int keylen,std::map<unsigned int,unsigned int>* characters_so_far,FILE* pfile=NULL) {
 	unsigned int number_of_characters_so_far = characters_so_far->size();
 	if(characters_so_far->size()==keylen) {
-		DecryptByKeyAndPrint(characters_so_far);
+		DecryptByKeyAndPrint(characters_so_far,pfile);
 		return;
 	} else {
 		CHARLIST charlist = (*keyscharacters)[number_of_characters_so_far+1];
 		for (std::map<unsigned int,unsigned int>::iterator it=charlist.begin();it!=charlist.end();it++) {
 			characters_so_far->insert(pair<int,int>(characters_so_far->size()+1,it->first));
-			IterateThroughKeysAndDecrypt(keyscharacters,keylen,characters_so_far);
+			IterateThroughKeysAndDecrypt(keyscharacters,keylen,characters_so_far,pfile);
 			characters_so_far->erase(characters_so_far->size());
 		}
 	}
 }
 //
-void IterateThroughPromisingKeysAndDecrypt(std::map<unsigned int,unsigned int>* promisingkeys,std::map<unsigned int,CHARLIST>** keyscharacters) {
+void IterateThroughPromisingKeysAndDecrypt(std::map<unsigned int,unsigned int>* promisingkeys,std::map<unsigned int,CHARLIST>** keyscharacters,FILE* pfile=NULL) {
 	for (std::map<unsigned int,unsigned int>::iterator it=promisingkeys->begin();it!=promisingkeys->end();it++) {
 		if(it->second>0) {
 			unsigned int keylen = it->first;
 			std::map<unsigned int,CHARLIST>* charactersforkey = keyscharacters[keylen];
 			std::map<unsigned int,unsigned int>* characters_so_far = new std::map<unsigned int,unsigned int>;
-			IterateThroughKeysAndDecrypt(charactersforkey,keylen,characters_so_far);
+			IterateThroughKeysAndDecrypt(charactersforkey,keylen,characters_so_far,pfile);
 			delete characters_so_far;
 		}
 	}
@@ -191,11 +193,12 @@ unsigned int DetermineTextLegnth() {
 int main() {
 	unsigned int textlen = DetermineTextLegnth();
 	std::cout << "text length : " << textlen << "\n";
+	unsigned int maxkeylength = textlen<MAX_KEY_LENGTH?textlen:MAX_KEY_LENGTH;
 	//
-	std::map<unsigned int,unsigned int>* promisingkeys = CreateInitializePromisingKeyLength(textlen);
+	std::map<unsigned int,unsigned int>* promisingkeys = CreateInitializePromisingKeyLength(maxkeylength);
 	std::map<unsigned int,CHARLIST>* keyscharacters[MAX_KEY_LENGTH+1];
 	//
-	for(int keylength=1;keylength<=textlen;keylength++)
+	for(int keylength=1;keylength<=maxkeylength;keylength++)
 	{
 		keyscharacters[keylength] = CreateInitializeKeyCharacters(keylength);
 		int startIndex = 1;
@@ -245,7 +248,9 @@ int main() {
 	}
 	//
 	IterateThroughPromisingKeysAndShowStats(promisingkeys);
-	IterateThroughPromisingKeysAndDecrypt(promisingkeys,keyscharacters);
+	FILE* pfile = fopen(PFILE,"w");
+	IterateThroughPromisingKeysAndDecrypt(promisingkeys,keyscharacters,pfile);
+	fclose(pfile);
 	//
 	std::cout << "-----------------------------------------------------------------\n";
 	//tidy up the room before you leave:
