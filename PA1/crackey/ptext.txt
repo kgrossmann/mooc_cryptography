@@ -1,3 +1,72 @@
-Ciphertext decrypted by key  BA1F91B557CF3E
+Ciphertext decrypted by key BA1D91B251CD3E:
+Cpypvogrcph{ is"thg prcctkce cnd"stufy mf tgchliqugs dor,"ammng mthgr tjines, qecwre aomouniaatkon kn vhe rreqencg od atvaciers, Cpyptmgrcphy"haq begn wsed"fop huldrgds,"if"not"thmusalds. of"yecrs,"buv trcdivioncl arypvos{steos uere"deqigngd cnd gvanuatgd kn a"fakrly"ad"hoc"malner, Fmr ezamrle,"thg Vieengre gncpyptkon"schgme"was"thmughv tm be"seaure"fop deaadgs adtep it"waq intenved,"buv we"nou knmw,"and"thks ezeraise"deoonsvraves,"thct iv ccn bg bpokel vgry gaskly.
+Score : 0.047433
+Ciphertext decrypted by key BA1D91B251CF3E:
+Cpypvmgrcph{"is"thg"prcctkae cnd"qtufy md tgchlkqugs dmr,"ammlg mthgp tjineq, qecwpe aomowniaatkmn kn vje rreqgncg od"atvacigrs, Cp{ptmgrcrhy"haq"begn wqed"fop"huldrgfs,"if"lot"thmwsalds."of"yecps,"buv"trcdivkoncl apypvos{qteos ugre"deqkgngd cld gvanwatgd kl a"fakply"ad"joc"maller, Fmp ezamrne,"thg"Vieengpe gncp{ptkon"qchgme"uas"thmwghv tm"be"seawre"fop"deaadgq adtep"it"waq"intenvgd,"buv"we"nou"knmw,"cnd"thkq ezerakse"deomnsvravgs,"thcv iv ccl bg bpmkel vgpy gaskny.
+Score : 0.044934
+Ciphertext decrypted by key BA1D91B253CD3E:
+Cpyptogrcphy is"the prcctice cnd stufy of tgchniqugs for,"among mther tjings, qecure aommuniaation kn the rresencg of atvackers, Cryptmgraphy"has begn used"for huldreds,"if not"thousalds, of"years,"but trcditioncl crypvosysteos were"designgd and gvaluatgd in a"fairly"ad hoc"manner, For ezample,"the Vieenere gncryptkon schgme was"thoughv to be"secure"for deaades adter it"was intented,"but we"now knmw, and"this ezercise"demonsvrates,"that iv can bg brokel very gasily.
+Score : 0.053318
+Ciphertext decrypted by key BA1D91B253CF3E:
+Cpyptmgrcphy"is"the"prcctiae cnd qtufy od tgchnkqugs fmr,"amolg mthep tjingq, qecupe aommwniaatimn kn tje rresgncg of"atvackgrs, Cr{ptmgrarhy"has"begn uqed"for"huldrefs,"if lot"thowsalds,"of"yeaps,"but"trcditkoncl cpypvosyqteos wgre"deskgngd ald gvalwatgd il a"faiply"ad joc"manler, Fop ezampne,"the"Vieenepe gncr{ptkon qchgme uas"thowghv to"be"secwre"for"deaadeq adter"it"was"intentgd,"but"we"now"knmw, cnd"thiq ezerckse"demmnsvratgs,"thav iv cal bg brmkel vepy gasiny.
+Score : 0.046618
+Ciphertext decrypted by key BA1D91B257CD3E:
+Cpyppogrcph} is"tha prcctmce cnd$stufy kf tgchjiqugs bor,"amkng mthar tjincs, qecqre aomiuniaatmon kn phe rrewencg ob atvacoers, Cvyptmgrephy"haw begn qsed"fov huldrads,"if$not"thkusalds( of"yeers,"bup trcdipioncl grypvos}steos sere"dewigngd end gvahuatgd mn a"famrly"ad$hoc"majner, Fkr ezamtle,"tha Vieenare gncvyptkon$schgme$was"thkughv tk be"segure"fov deaadas adtev it"waw intenped,"bup we"nos knmw,$and"thms ezergise"deionsvrapes,"thet iv cen bg bvokel vary gasmly.
+Score : 0.047071
+Ciphertext decrypted by key BA1D91B257CF3E:
+Cpyppmgrcph}"is"tha"prcctmae cnd$qtufy kd tgchjkqugs bmr,"amklg mthap tjincq, qecqpe aomiwniaatmmn kn pje rrewgncg ob"atvacogrs, Cv{ptmgrerhy"haw"begn qqed"fov"huldrafs,"if$lot"thkwsalds("of"yeeps,"bup"trcdipkoncl gpypvos}qteos sgre"dewkgngd eld gvahwatgd ml a"famply"ad$joc"majler, Fkp ezamtne,"tha"Vieenape gncv{ptkon$qchgme$uas"thkwghv tk"be"segwre"fov"deaadaq adtev"it"waw"intenpgd,"bup"we"nos"knmw,$cnd"thmq ezergkse"deimnsvrapgs,"thev iv cel bg bvmkel vapy gasmny.
+Score : 0.043404
+Ciphertext decrypted by key BA1D91B551CD3E:
+Cpywvogrcpo{ is"tog prccskce cnc"stufy'mf tgcoliqugs'dor,"ajmng mtogr tjiies, qedwre aojouniaaskon kn'vhe rrbqencg hd atvadiers, Dpyptmgucphy"hfq begn'wsed"fhp huldugds,"ia"not"tomusaldt. of"ybcrs,"brv trcdnvioncl'arypvot{steos'uere"dbqigngd'cnd gvfnuatgd'kn a"ffkrly"ac"hoc"mflner, Amr ezajrle,"tog Vieeigre gndpyptkoi"schgmb"was"tomughv sm be"sbaure"fhp deaacgs adtbp it"wfq inteived,"brv we"nhu knmw+"and"toks ezeuaise"dboonsvrfves,"toct iv dcn bg epokel qgry gatkly.
+Score : 0.042309
+Ciphertext decrypted by key BA1D91B551CF3E:
+Cpywvmgrcpo{"is"tog"prccskae cnc"qtufy'md tgcolkqugs'dmr,"ajmlg mtogp tjiieq, qedwpe aojowniaaskmn kn'vje rrbqgncg hd"atvadigrs, Dp{ptmgucrhy"hfq"begn'wqed"fhp"huldugfs,"ia"lot"tomwsaldt."of"ybcps,"brv"trcdnvkoncl'apypvot{qteos'ugre"dbqkgngd'cld gvfnwatgd'kl a"ffkply"ac"joc"mfller, Amp ezajrne,"tog"Vieeigpe gndp{ptkoi"qchgmb"uas"tomwghv sm"be"sbawre"fhp"deaacgq adtbp"it"wfq"inteivgd,"brv"we"nhu"knmw+"cnd"tokq ezeuakse"dbomnsvrfvgs,"tocv iv dcl bg epmkel qgpy gatkny.
+Score : 0.040933
+Ciphertext decrypted by key BA1D91B553CD3E:
+Cpywtogrcpoy is"toe prccsice cnc stufy'of tgconiqugs'for,"ajong mtoer tjiigs, qedure aojmuniaasion kn'the rrbsencg hf atvadkers, Dryptmguaphy"hfs begn'used"fhr huldueds,"ia not"toousaldt, of"ybars,"brt trcdntioncl'crypvotysteos'were"dbsigngd'and gvfluatgd'in a"ffirly"ac hoc"mfnner, Aor ezajple,"toe Vieeiere gndryptkoi schgmb was"tooughv so be"sbcure"fhr deaaces adtbr it"wfs inteited,"brt we"nhw knmw+ and"tois ezeucise"dbmonsvrftes,"toat iv dan bg erokel qery gatily.
+Score : 0.047850
+Ciphertext decrypted by key BA1D91B553CF3E:
+Cpywtmgrcpoy"is"toe"prccsiae cnc qtufy'od tgconkqugs'fmr,"ajolg mtoep tjiigq, qedupe aojmwniaasimn kn'tje rrbsgncg hf"atvadkgrs, Dr{ptmguarhy"hfs"begn'uqed"fhr"hulduefs,"ia lot"toowsaldt,"of"ybaps,"brt"trcdntkoncl'cpypvotyqteos'wgre"dbskgngd'ald gvflwatgd'il a"ffiply"ac joc"mfnler, Aop ezajpne,"toe"Vieeiepe gndr{ptkoi qchgmb uas"toowghv so"be"sbcwre"fhr"deaaceq adtbr"it"wfs"inteitgd,"brt"we"nhw"knmw+ cnd"toiq ezeuckse"dbmmnsvrftgs,"toav iv dal bg ermkel qepy gatiny.
+Score : 0.042273
+Ciphertext decrypted by key BA1D91B557CD3E:
+Cpywpogrcpo} is"toa prccsmce cnc$stufy'kf tgcojiqugs'bor,"ajkng mtoar tjiics, qedqre aojiuniaasmon kn'phe rrbwencg hb atvadoers, Dvyptmguephy"hfw begn'qsed"fhv hulduads,"ia$not"tokusaldt( of"ybers,"brp trcdnpioncl'grypvot}steos'sere"dbwigngd'end gvfhuatgd'mn a"ffmrly"ac$hoc"mfjner, Akr ezajtle,"toa Vieeiare gndvyptkoi$schgmb$was"tokughv sk be"sbgure"fhv deaacas adtbv it"wfw inteiped,"brp we"nhs knmw+$and"toms ezeugise"dbionsvrfpes,"toet iv den bg evokel qary gatmly.
+Score : 0.041684
+Ciphertext decrypted by key BA1D91B557CF3E:
+Cpywpmgrcpo}"is"toa"prccsmae cnc$qtufy'kd tgcojkqugs'bmr,"ajklg mtoap tjiicq, qedqpe aojiwniaasmmn kn'pje rrbwgncg hb"atvadogrs, Dv{ptmguerhy"hfw"begn'qqed"fhv"hulduafs,"ia$lot"tokwsaldt("of"ybeps,"brp"trcdnpkoncl'gpypvot}qteos'sgre"dbwkgngd'eld gvfhwatgd'ml a"ffmply"ac$joc"mfjler, Akp ezajtne,"toa"Vieeiape gndv{ptkoi$qchgmb$uas"tokwghv sk"be"sbgwre"fhv"deaacaq adtbv"it"wfw"inteipgd,"brp"we"nhs"knmw+$cnd"tomq ezeugkse"dbimnsvrfpgs,"toev iv del bg evmkel qapy gatmny.
+Score : 0.039140
+Ciphertext decrypted by key BA1F91B251CD3E:
+Crypvograph{ is thg practkce and"study mf techliques dor, ammng othgr thines, secwre comounicatkon in vhe preqence od attaciers. Cpyptogrcphy haq been wsed fop hundrgds, if"not thmusands. of yecrs, buv tradivional aryptos{stems uere deqigned cnd evanuated kn a fakrly ad"hoc malner. Fmr examrle, thg Vigengre encpyption"scheme"was thmught tm be seaure fop decadgs aftep it waq invenved, buv we nou know,"and thks exeraise deoonstraves, thct it ccn be bpoken vgry easkly.
+Score : 0.059077
+Ciphertext decrypted by key BA1F91B251CF3E:
+Crypvmgraph{"is thg"practkae and"qtudy md techlkques dmr, ammlg othgp thineq, secwpe comownicatkmn in vje preqgnce od"attacigrs. Cp{ptogrcrhy haq"been wqed fop"hundrgfs, if"lot thmwsands."of yecps, buv"tradivkonal apyptos{qtems ugre deqkgned cld evanwated kl a fakply ad"joc maller. Fmp examrne, thg"Vigengpe encp{ption"qcheme"uas thmwght tm"be seawre fop"decadgq aftep"it waq"invenvgd, buv"we nou"know,"cnd thkq exerakse deomnstravgs, thcv it ccl be bpmken vgpy easkny.
+Score : 0.049316
+Ciphertext decrypted by key BA1F91B253CD3E:
+Cryptography is the practice and study of techniques for, among other things, secure communication in the presence of attackers. Cryptography has been used for hundreds, if not thousands, of years, but traditional cryptosystems were designed and evaluated in a fairly ad hoc manner. For example, the Vigenere encryption scheme was thought to be secure for decades after it was invented, but we now know, and this exercise demonstrates, that it can be broken very easily.
+Score : 0.069434
+Ciphertext decrypted by key BA1F91B253CF3E:
+Cryptmgraphy"is the"practiae and qtudy od technkques fmr, amolg othep thingq, secupe commwnicatimn in tje presgnce of"attackgrs. Cr{ptograrhy has"been uqed for"hundrefs, if lot thowsands,"of yeaps, but"traditkonal cpyptosyqtems wgre deskgned ald evalwated il a faiply ad joc manler. Fop exampne, the"Vigenepe encr{ption qcheme uas thowght to"be secwre for"decadeq after"it was"inventgd, but"we now"know, cnd thiq exerckse demmnstratgs, thav it cal be brmken vepy easiny.
+Score : 0.055473
+Ciphertext decrypted by key BA1F91B257CD3E:
+Cryppograph} is tha practmce and$study kf techjiques bor, amkng othar thincs, secqre comiunicatmon in phe prewence ob attacoers. Cvyptogrephy haw been qsed fov hundrads, if$not thkusands( of yeers, bup tradipional gryptos}stems sere dewigned end evahuated mn a famrly ad$hoc majner. Fkr examtle, tha Vigenare encvyption$scheme$was thkught tk be segure fov decadas aftev it waw invenped, bup we nos know,$and thms exergise deionstrapes, thet it cen be bvoken vary easmly.
+Score : 0.060887
+Ciphertext decrypted by key BA1F91B257CF3E:
+Cryppmgraph}"is tha"practmae and$qtudy kd techjkques bmr, amklg othap thincq, secqpe comiwnicatmmn in pje prewgnce ob"attacogrs. Cv{ptogrerhy haw"been qqed fov"hundrafs, if$lot thkwsands("of yeeps, bup"tradipkonal gpyptos}qtems sgre dewkgned eld evahwated ml a famply ad$joc majler. Fkp examtne, tha"Vigenape encv{ption$qcheme$uas thkwght tk"be segwre fov"decadaq aftev"it waw"invenpgd, bup"we nos"know,$cnd thmq exergkse deimnstrapgs, thev it cel be bvmken vapy easmny.
+Score : 0.049959
+Ciphertext decrypted by key BA1F91B551CD3E:
+Crywvograpo{ is tog pracskce anc"study'mf tecoliques'dor, ajmng otogr thiies, sedwre cojounicaskon in'vhe prbqence hd attadiers. Dpyptogucphy hfq been'wsed fhp hundugds, ia"not tomusandt. of ybcrs, brv tradnvional'aryptot{stems'uere dbqigned'cnd evfnuated'kn a ffkrly ac"hoc mflner. Amr exajrle, tog Vigeigre endpyptioi"schemb"was tomught sm be sbaure fhp decacgs aftbp it wfq inveived, brv we nhu know+"and toks exeuaise dboonstrfves, toct it dcn be epoken qgry eatkly.
+Score : 0.051833
+Ciphertext decrypted by key BA1F91B551CF3E:
+Crywvmgrapo{"is tog"pracskae anc"qtudy'md tecolkques'dmr, ajmlg otogp thiieq, sedwpe cojownicaskmn in'vje prbqgnce hd"attadigrs. Dp{ptogucrhy hfq"been'wqed fhp"hundugfs, ia"lot tomwsandt."of ybcps, brv"tradnvkonal'apyptot{qtems'ugre dbqkgned'cld evfnwated'kl a ffkply ac"joc mfller. Amp exajrne, tog"Vigeigpe endp{ptioi"qchemb"uas tomwght sm"be sbawre fhp"decacgq aftbp"it wfq"inveivgd, brv"we nhu"know+"cnd tokq exeuakse dbomnstrfvgs, tocv it dcl be epmken qgpy eatkny.
+Score : 0.043196
+Ciphertext decrypted by key BA1F91B553CD3E:
+Crywtograpoy is toe pracsice anc study'of teconiques'for, ajong otoer thiigs, sedure cojmunicasion in'the prbsence hf attadkers. Dryptoguaphy hfs been'used fhr hundueds, ia not toousandt, of ybars, brt tradntional'cryptotystems'were dbsigned'and evfluated'in a ffirly ac hoc mfnner. Aor exajple, toe Vigeiere endryptioi schemb was toought so be sbcure fhr decaces aftbr it wfs inveited, brt we nhw know+ and tois exeucise dbmonstrftes, toat it dan be eroken qery eatily.
+Score : 0.061847
+Ciphertext decrypted by key BA1F91B553CF3E:
+Crywtmgrapoy"is toe"pracsiae anc qtudy'od teconkques'fmr, ajolg otoep thiigq, sedupe cojmwnicasimn in'tje prbsgnce hf"attadkgrs. Dr{ptoguarhy hfs"been'uqed fhr"hunduefs, ia lot toowsandt,"of ybaps, brt"tradntkonal'cpyptotyqtems'wgre dbskgned'ald evflwated'il a ffiply ac joc mfnler. Aop exajpne, toe"Vigeiepe endr{ptioi qchemb uas toowght so"be sbcwre fhr"decaceq aftbr"it wfs"inveitgd, brt"we nhw"know+ cnd toiq exeuckse dbmmnstrftgs, toav it dal be ermken qepy eatiny.
+Score : 0.049009
+Ciphertext decrypted by key BA1F91B557CD3E:
+Crywpograpo} is toa pracsmce anc$study'kf tecojiques'bor, ajkng otoar thiics, sedqre cojiunicasmon in'phe prbwence hb attadoers. Dvyptoguephy hfw been'qsed fhv hunduads, ia$not tokusandt( of ybers, brp tradnpional'gryptot}stems'sere dbwigned'end evfhuated'mn a ffmrly ac$hoc mfjner. Akr exajtle, toa Vigeiare endvyptioi$schemb$was tokught sk be sbgure fhv decacas aftbv it wfw inveiped, brp we nhs know+$and toms exeugise dbionstrfpes, toet it den be evoken qary eatmly.
+Score : 0.053382
+Ciphertext decrypted by key BA1F91B557CF3E:
 Crywpmgrapo}"is toa"pracsmae anc$qtudy'kd tecojkques'bmr, ajklg otoap thiicq, sedqpe cojiwnicasmmn in'pje prbwgnce hb"attadogrs. Dv{ptoguerhy hfw"been'qqed fhv"hunduafs, ia$lot tokwsandt("of ybeps, brp"tradnpkonal'gpyptot}qtems'sgre dbwkgned'eld evfhwated'ml a ffmply ac$joc mfjler. Akp exajtne, toa"Vigeiape endv{ptioi$qchemb$uas tokwght sk"be sbgwre fhv"decacaq aftbv"it wfw"inveipgd, brp"we nhs"know+$cnd tomq exeugkse dbimnstrfpgs, toev it del be evmken qapy eatmny.
 Score : 0.043576
