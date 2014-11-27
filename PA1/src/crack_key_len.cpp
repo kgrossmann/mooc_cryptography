@@ -1,6 +1,6 @@
 //============================================================================
 // Name        : crack_key_len.cpp
-// Author      : Klemens Gro?mann
+// Author      : Klemens Grossmann
 // Version     :
 // Copyright   : Your copyright notice
 // Description : Hello World in C++, Ansi-style
@@ -14,70 +14,77 @@
 //
 using namespace std;
 //
+#define CHAR_RANGE_LOWER_BOUND 0
+#define CHAR_RANGE_UPPER_BOUND 255
 #define ENGLISH_LETTER_FREQUENCY 0.065
+#define CFILE "ctext.txt"
 //
-static unsigned int letters_total = 0;
-static std::map<unsigned char,int>* histogram = new std::map<unsigned char,int>;  //node ID and index in current cycle
-//
-float CalcDistributinScore() {
+float CalcDistributinScore(std::map<unsigned int,unsigned int>* histogram, unsigned int letterstotal) {
    float fdistributinScore = 0;
    if(histogram->size()) {
-	   for (std::map<unsigned char,int>::iterator it=histogram->begin(); it!=histogram->end();it++) {
-		   float real_probabilty = it->second/(float)letters_total;
+	   for (std::map<unsigned int,unsigned int>::iterator it=histogram->begin(); it!=histogram->end();it++) {
+		   float real_probabilty = it->second/(float)letterstotal;
 		   fdistributinScore += real_probabilty*real_probabilty;
-
 	   }
    }
    return (fdistributinScore);
 }
-
-int main() {
+//
+unsigned int DetermineTextLegnth() {
+	FILE* fcIn = fopen(CFILE,"r");
+	unsigned int textlen = 0;
 	unsigned char ch;
-	float fbestScore = 0.0;
-	float fbestDiff = 1.0;
-    FILE *fcIn, *fpOut;
-	int i;
-	int bestkeylen = 1;
-	int lextlen = 0;
-	fcIn = fopen("ctext.txt","r");
 	while (fscanf(fcIn,"%2hhX",&ch)!=EOF) {
-		lextlen++;
+		textlen++;
 	}
 	fclose(fcIn);
-	std::cout << "text len " << lextlen << "\n";
+	return textlen;
+}
+//
+std::map<unsigned int,unsigned int>* CreateInitializeHistogram() {
+	std::map<unsigned int,unsigned int>* histogram = new std::map<unsigned int,unsigned int>;
+	for(unsigned int i=CHAR_RANGE_LOWER_BOUND;i<=CHAR_RANGE_UPPER_BOUND;i++) {
+		histogram->insert(pair<unsigned int,unsigned int>(i,0));
+	}
+	return (histogram);
+}
+//
+int main() {
+
+	int lextlen = DetermineTextLegnth();
+	std::cout << "text length : " << lextlen << "\n";
 	//
-	int keylen = 1;
+	float fbestScore = 0.0;
+	float fbestDiff = 1.0;
+	unsigned int bestkeylen = 1;
+	unsigned int keylen = 1;
 	while(keylen<=lextlen)
 	{
-		fcIn = fopen("ctext.txt","r");
-		i=0;
-		histogram->clear();
-		for(unsigned int b=0;b<=255;b++) {
-			histogram->insert(pair<unsigned char,int>((char)b,0));
-		}
-		letters_total = 0;
+		FILE* fcIn = fopen("ctext.txt","r");
+		unsigned int letterstotal = 0;
+		std::map<unsigned int,unsigned int>* histogram = CreateInitializeHistogram();
+		unsigned int i = 0;
+		unsigned char ch;
 		while (fscanf(fcIn,"%2hhX",&ch)!=EOF) {
 			i++;
 			if(((i-1)%keylen)==0) {
 				(*histogram)[ch]++;
-				letters_total++;
+				letterstotal++;
 			}
 		}
-		float fScore = CalcDistributinScore();
+		float fScore = CalcDistributinScore(histogram,letterstotal);
+		delete  histogram;
 		float fdiff = ENGLISH_LETTER_FREQUENCY-fScore>= 0.0 ? ENGLISH_LETTER_FREQUENCY-fScore : fScore-ENGLISH_LETTER_FREQUENCY;
-		std::cout << "score " << fScore << " diff " << fdiff << " keylen = " << keylen << "\n";
-		if(fdiff<=fbestDiff) {
-			if (fScore>fbestScore) {
-		    	fbestDiff = fdiff;
-		    	fbestScore = fScore;
-		    	bestkeylen = keylen;
-		    	std::cout << " best score " << fbestScore << " keylen = " << bestkeylen << "\n";
-		    }
+		if(fdiff<=fbestDiff && fScore>fbestScore) {
+			fbestDiff = fdiff;
+		    fbestScore = fScore;
+		    bestkeylen = keylen;
+		    std::cout << " better score " << fbestScore << " for keylen = " << bestkeylen << "\n";
 		}
 		keylen++;
 		fclose(fcIn);
 	}
 	//
-	std::cout << " best score " << fbestScore << " keylen = " << bestkeylen << "\n";
+	std::cout << " best score " << fbestScore << " at keylen = " << bestkeylen << "\n";
 	return 0;
 }
