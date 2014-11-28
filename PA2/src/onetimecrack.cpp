@@ -90,13 +90,14 @@ PAIRING_TYPE GetPairingType(unsigned char char1,unsigned char char2) {
 }
 //
 unsigned int WhichOneIsTheSpaceCharacter(unsigned char char1,unsigned int message1Idx,unsigned char char2,unsigned int message2Idx,unsigned int letterIdx) {
-	//the one which is letter and is paired at leat once which another message
-	//will get at least once LETTER_AND_LETTER_PREFIX
+	//the one which is letter and is paired at least once which another message
+	//will yield at least once a LETTER_AND_LETTER_PREFIX; if so, the the other
+	//character is the space character
 	for(unsigned int c=0;c<NO_OF_MESSAGES;c++) {
 		if(c!=message1Idx) {
 			unsigned char other_char = ExtractCharFromCipherMessage(c,letterIdx);
 			if(GetPairingType(char1,other_char)==LETTER_LETTER) {
-				//the first in the letter character, hence the second is th space
+				//the first char is the letter character, hence the second one is the space
 				return 2;
 			}
 		}
@@ -105,7 +106,7 @@ unsigned int WhichOneIsTheSpaceCharacter(unsigned char char1,unsigned int messag
 		if(c!=message2Idx) {
 			unsigned char other_char = ExtractCharFromCipherMessage(c,letterIdx);
 			if(GetPairingType(char2,other_char)==LETTER_LETTER) {
-				//the second in the letter character, hence the first is the space
+				//the second char is the letter character, hence the first one is the space
 				return 1;
 			}
 		}
