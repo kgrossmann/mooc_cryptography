@@ -18,7 +18,6 @@ using namespace std;
 //
 #define KEY_LENGTH 31
 #define NO_OF_MESSAGES 7
-#define PFILE "ptext.txt"
 #define SPACE_AND_LETTER_PREFIX "01"
 #define LETTER_AND_LETTER_PREFIX "00"
 #define SPACE_IN_DECIMAL 32
