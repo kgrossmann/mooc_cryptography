@@ -9,21 +9,16 @@
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
-#include <map>
 #include <string>
 #include <stdlib.h>
 #include <stdio.h>
-#include <assert.h>
 #include <cmath>
 //
 using namespace std;
 //
-#define KEY_CHAR_RANGE_LOWER_BOUND 0
-#define KEY_CHAR_RANGE_UPPER_BOUND 255
 #define KEY_LENGTH 31
 #define NO_OF_MESSAGES 7
 #define PFILE "ptext.txt"
-#define SECTION_SEPARATOR "--------------------------------------------------------------------------------------\n"
 #define SPACE_AND_LETTER_PREFIX "01"
 #define LETTER_AND_LETTER_PREFIX "00"
 #define SPACE_IN_DECIMAL 32
@@ -38,6 +33,17 @@ static string cipher_messages[NO_OF_MESSAGES] = {"BB3A65F6F0034FA957F6A767699CE7
 						"A6726DE8F01A50E849EDBC6C7C9CF2B2A88E19FD423E0647ECCB04DD4C9D1E",
 						"BC7570BBBF1D46E85AF9AA6C7A9CEFA9E9825CFD5E3A0047F7CD009305A71E"};
 
+//character gueesed by human reader: message (1-7), index(1-31),character
+static unsigned int number_of_human_guessed_plain_characters = 8;
+static string human_guessed_plain_characters[] = {"1", "1","I",
+						 "1", "9","n",
+						 "1","18","e",
+						 "1","21","e",
+						 "1","30","n",
+						 "1", "31",".",
+						 "2","11","o",
+						 "5", "7","k"};
+//
 static unsigned char crackedkey[KEY_LENGTH];
 //
 unsigned char ExtractCharFromCipherMessage(unsigned int messsageIdx, unsigned int letterIdx) {
@@ -48,15 +54,16 @@ unsigned char ExtractCharFromCipherMessage(unsigned int messsageIdx, unsigned in
 	return character;
 }
 //
-void FormatToBinary(unsigned int number,unsigned int digits,char* buf ) {
+void FormatIntegerToBinary(unsigned int number,unsigned int digits,char* buf) {
 	unsigned int n = number & ((unsigned int)pow(2,digits)-1);
-	for(int i=0;i<digits;i++) {
-		int shift =	digits-i-1;
+	for(unsigned int i=0;i<digits;i++) {
+		unsigned int shift = digits-i-1;
 		if(n>>shift==1) {
 			buf[i] = '1';
 		} else {
 			buf[i] = '0';
 		}
+		//getting rid of the lefmost digit by shifting left and right again:
 		n = n<<(shift+1);
 		n = n>>(shift+1);
 	}
@@ -70,9 +77,7 @@ PAIRING_TYPE GetPairingType(unsigned char char1,unsigned char char2) {
 		pairingtype = IDENTICAL;
 	} else {
 		char binarystring[10];
-		sprintf(binarystring,"%b",xorresult);
-		FormatToBinary(xorresult,8,binarystring);
-		//itoa(xorresult,binarystring,2);
+		FormatIntegerToBinary(xorresult,8,binarystring);
 		string prefix = binarystring;
 		prefix = prefix.substr(0,2);
 		if(prefix==SPACE_AND_LETTER_PREFIX) {
@@ -84,14 +89,15 @@ PAIRING_TYPE GetPairingType(unsigned char char1,unsigned char char2) {
 	return pairingtype;
 }
 //
-unsigned int WhichOneIsLetter(unsigned char char1,unsigned int message1Idx,unsigned char char2,unsigned int message2Idx,unsigned int letterIdx) {
+unsigned int WhichOneIsTheSpaceCharacter(unsigned char char1,unsigned int message1Idx,unsigned char char2,unsigned int message2Idx,unsigned int letterIdx) {
 	//the one which is letter and is paired at leat once which another message
 	//will get at least once LETTER_AND_LETTER_PREFIX
 	for(unsigned int c=0;c<NO_OF_MESSAGES;c++) {
 		if(c!=message1Idx) {
 			unsigned char other_char = ExtractCharFromCipherMessage(c,letterIdx);
 			if(GetPairingType(char1,other_char)==LETTER_LETTER) {
-				return 1;
+				//the first in the letter character, hence the second is th space
+				return 2;
 			}
 		}
 	}
@@ -99,11 +105,24 @@ unsigned int WhichOneIsLetter(unsigned char char1,unsigned int message1Idx,unsig
 		if(c!=message2Idx) {
 			unsigned char other_char = ExtractCharFromCipherMessage(c,letterIdx);
 			if(GetPairingType(char2,other_char)==LETTER_LETTER) {
-				return 2;
+				//the second in the letter character, hence the first is the space
+				return 1;
 			}
 		}
 	}
 	return 0;
+}
+//
+void FillInKeyGapsByHumanGuessing() {
+	for(unsigned int i=0;i<number_of_human_guessed_plain_characters*3;i+=3) {
+		unsigned int message1Idx = atoi (human_guessed_plain_characters[i].c_str())-1;
+		unsigned int letterIdx = atoi (human_guessed_plain_characters[i+1].c_str())-1;
+		unsigned char plain_char = human_guessed_plain_characters[i+2][0];
+		unsigned char cipher_char = ExtractCharFromCipherMessage(message1Idx,letterIdx);
+		unsigned char key_char = plain_char^cipher_char;
+		//human-guessed characters overwrite the previously calcualted ones
+		crackedkey[letterIdx] = key_char;
+	}
 }
 //
 void DecryptAndPrint() {
@@ -122,7 +141,6 @@ void DecryptAndPrint() {
 }
 //
 int main() {
-
 	//
 	memset(crackedkey,0,KEY_LENGTH);
 	for(unsigned int i=0;i<KEY_LENGTH;i++) {
@@ -133,12 +151,12 @@ int main() {
 					unsigned char char2 = ExtractCharFromCipherMessage(c2,i);
 					PAIRING_TYPE pairingtype = GetPairingType(char1,char2);
 					if(pairingtype==SPACE_LETTER) {
-						unsigned int iLetter = WhichOneIsLetter(char1,c1,char2,c2,i);
-						if(iLetter==1)  {
-							unsigned char key = char2^SPACE_IN_DECIMAL;
-							crackedkey[i] = key;
-						} else if(iLetter==2)  {
+						unsigned int iSpaceLetter = WhichOneIsTheSpaceCharacter(char1,c1,char2,c2,i);
+						if(iSpaceLetter==1)  {
 							unsigned char key = char1^SPACE_IN_DECIMAL;
+							crackedkey[i] = key;
+						} else if(iSpaceLetter==2)  {
+							unsigned char key = char2^SPACE_IN_DECIMAL;
 							crackedkey[i] = key;
 						}
 					}
@@ -146,9 +164,10 @@ int main() {
 			}
 		}
 	}
+	//
+	FillInKeyGapsByHumanGuessing();
 	DecryptAndPrint();
 	//
-
 	return 0;
 }
 
