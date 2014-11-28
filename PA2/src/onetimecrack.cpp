@@ -63,7 +63,7 @@ void FormatIntegerToBinary(unsigned int number,unsigned int digits,char* buf) {
 		} else {
 			buf[i] = '0';
 		}
-		//getting rid of the lefmost digit by shifting left and right again:
+		//getting rid of the lefmost non-zero digit by shifting left and right again:
 		n = n<<(shift+1);
 		n = n>>(shift+1);
 	}
