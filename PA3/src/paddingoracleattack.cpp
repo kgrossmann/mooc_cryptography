@@ -57,8 +57,8 @@ int main(int argc, char *argv[]) {
 	 }
 	 fclose(fpIn);
 	 //
-	 Oracle_Connect();
 	 //figure out the message length of the last message
+	 Oracle_Connect();
 	 unsigned int lastmsglen = 0;
 	 for(unsigned char i=0;i<BLOCK_LEN;i++) {
 		 ctext[16+i] = 0x66;
@@ -79,7 +79,7 @@ int main(int argc, char *argv[]) {
 		     ctext[16+i] = ctext[16+i]^(pad_len)^(pad_len-1);
 		 }
 		 int index = BLOCK_LEN-pad_len;
-		 for(unsigned int b=0;b<255;b++) {
+		 for(unsigned int b=255;b>=0;b--) {
 			 ctext[16+index] = b;
 			 //we have filled in all the field of the ciphemessage, if we send it and get not error
 			 //we know we have chosen the correct c1 value
