@@ -13,10 +13,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
-#include <algorithm>  // std::min
 //
 using namespace std;
-
+//
 #define KEY_CHAR_RANGE_LOWER_BOUND 0
 #define KEY_CHAR_RANGE_UPPER_BOUND 255
 #define MAX_KEY_LENGTH 512
@@ -25,7 +24,8 @@ using namespace std;
 #define STREAM_TOLERANCE_AGAINST_ENGLISH_LETTER_FREQUENCY 0.10
 #define CFILE "ctext.txt"
 #define PFILE "ptext.txt"
-
+#define SECTION_SEPARATOR "--------------------------------------------------------------------------------------\n"
+//
 typedef std::map<unsigned int,unsigned int> CHARLIST;
 static char msgbuf[1024];
 //
@@ -79,8 +79,8 @@ float CalculateScoreFromHistogram(std::map<unsigned int,unsigned int>* histogram
 				  || it->first == '?'
 				  || it->first == ','
 				  || it->first == '-'
-				  || it->first == ';'
-				  || it->first == ':'
+				  //|| it->first == ';'
+				  //|| it->first == ':'
 			   )) {
 			   float real_probabilty = it->second/(float)letters_total;
 			   fdistributinScore += real_probabilty*real_probabilty;
@@ -94,12 +94,12 @@ float CalculateScoreFromHistogram(std::map<unsigned int,unsigned int>* histogram
    return (fdistributinScore);
 }
 //
-float CalculateScoreFromHistogramTextOnly(std::map<unsigned int,unsigned int>* histogram, unsigned int letters_total) {
+float CalculateScoreFromHistogramLowerTextOnly(std::map<unsigned int,unsigned int>* histogram, unsigned int letters_total) {
    float fdistributinScore = 0.0;
    for (std::map<unsigned int,unsigned int>::iterator it=histogram->begin();it!=histogram->end();it++) {
 	   if (it->second>0) {
 		   if (it->first>=32 && it->first<=127
-			  && (isalpha(it->first) || isspace(it->first) || it->first == ',')) {
+			  && (islower(it->first) || isspace(it->first) || it->first == ',' || it->first == 'I')) {
 			   float real_probabilty = it->second/(float)letters_total;
 			   fdistributinScore += real_probabilty*real_probabilty;
 		   }  else {
@@ -110,11 +110,11 @@ float CalculateScoreFromHistogramTextOnly(std::map<unsigned int,unsigned int>* h
    return (fdistributinScore);
 }
 //
-float CalculateScoreFromHistogramPunctOnly(std::map<unsigned int,unsigned int>* histogram, unsigned int letters_total) {
+float CalculateScoreFromHistogramEndPunctOnly(std::map<unsigned int,unsigned int>* histogram, unsigned int letters_total) {
    float fdistributinScore = 0.0;
    for (std::map<unsigned int,unsigned int>::iterator it=histogram->begin();it!=histogram->end();it++) {
 	   if (it->second>0) {
-		   if (it->first>=32 && it->first<=127 && (it->first == '.' || it->first == '!' || it->first == '?')) {
+		   if (it->first>=32 && it->first<=127 && (it->first == '.' /*|| it->first == '!'*/ || it->first == '?')) {
 			   float real_probabilty = it->second/(float)letters_total;
 			   fdistributinScore += real_probabilty*real_probabilty;
 		   }  else {
@@ -125,7 +125,7 @@ float CalculateScoreFromHistogramPunctOnly(std::map<unsigned int,unsigned int>* 
    return (fdistributinScore);
 }
 //
-float CalculateScoreFromHistogramUpperOnly(std::map<unsigned int,unsigned int>* histogram, unsigned int letters_total) {
+float CalculateScoreFromHistogramUpperLettersOnly(std::map<unsigned int,unsigned int>* histogram, unsigned int letters_total) {
    float fdistributinScore = 0.0;
    for (std::map<unsigned int,unsigned int>::iterator it=histogram->begin();it!=histogram->end();it++) {
 	   if (it->second>0) {
@@ -147,10 +147,11 @@ void DecryptByKeyAndPrint(std::map<unsigned int,unsigned int>* key,FILE* pfile=N
     	assert(false);
     	return;
     }
+    //
     unsigned int letters_total = 0;
     std::map<unsigned int,unsigned int>* histogram = CreateInitializeHistogram();
-
-    std::cout << "-----------------------------------------------------------------\n";
+    //
+    std::cout << SECTION_SEPARATOR;
    	sprintf(msgbuf,"%s","Ciphertext decrypted by key ");
    	if(pfile) fprintf(pfile,"%s",msgbuf);
    	std::cout << msgbuf;
@@ -177,21 +178,21 @@ void DecryptByKeyAndPrint(std::map<unsigned int,unsigned int>* key,FILE* pfile=N
     	(*histogram)[plainchar]++;
         letters_total++;
     }
-
+    //
     sprintf(msgbuf,"%s","\n");
     std::cout << msgbuf;
     if(pfile) fprintf(pfile,"%s",msgbuf);
-
+    //
     float fdistributinScore = CalculateScoreFromHistogram(histogram,letters_total);
     delete histogram;
-
+    //
     sprintf(msgbuf,"Score : %f",fdistributinScore);
     std::cout << msgbuf;
     if(pfile) fprintf(pfile,"%s",msgbuf);
     sprintf(msgbuf,"%s","\n");
     std::cout << msgbuf;
     if(pfile) fprintf(pfile,"%s",msgbuf);
-
+    //
     fclose(cfile);
 }
 //
@@ -219,7 +220,7 @@ void DecryptByKeyAndScore(std::map<unsigned int,unsigned int>* key,FILE* pfile=N
     float fScore = CalculateScoreFromHistogram(histogram,letters_total);
     float fdiff = ENGLISH_LETTER_FREQUENCY-fScore>= 0.0 ? ENGLISH_LETTER_FREQUENCY-fScore : fScore-ENGLISH_LETTER_FREQUENCY;
     if (fdiff<=TOLERANCE_AGAINST_ENGLISH_LETTER_FREQUENCY) {
-    	std::cout << "-----------------------------------------------------------------\n";
+    	std::cout << SECTION_SEPARATOR;
     	sprintf(msgbuf,"%s","Promisign key key ");
     	if(pfile) fprintf(pfile,"%s",msgbuf);
     	std::cout << msgbuf;
@@ -236,14 +237,12 @@ void DecryptByKeyAndScore(std::map<unsigned int,unsigned int>* key,FILE* pfile=N
     	if(pfile) fprintf(pfile,"%s",msgbuf);
     }
     delete histogram;
-
-
     fclose(cfile);
 }
 //
 unsigned int IterateThroughPromisingKeysAndShowStats(std::map<unsigned int,unsigned int>* promisingkeys) {
 	unsigned int iBestKeyIndex=0;
-	std::cout << "-----------------------------------------------------------------\n";
+	std::cout << SECTION_SEPARATOR;
 	for (std::map<unsigned int,unsigned int>::iterator it=promisingkeys->begin();it!=promisingkeys->end();it++) {
 		if(it->second>0) {
 			iBestKeyIndex = it->first;
@@ -311,6 +310,7 @@ int main() {
 			//characters in this stream are all decrypted by the same character in the key
 			bool bAtLeastOneViableKeyFound = false;
 			float fBestScore = 0.0;
+			float fMinDiff = 1.0;
 			for(unsigned int keychar=KEY_CHAR_RANGE_LOWER_BOUND;keychar<=KEY_CHAR_RANGE_UPPER_BOUND;keychar++) {
 				FILE* fcIn = fopen(CFILE,"r");
 				unsigned int letters_total = 0;
@@ -330,14 +330,15 @@ int main() {
 				float fScore = CalculateScoreFromHistogram(histogram,letters_total);
 				delete histogram;
 				if(fScore>0.0) {
-					float fdiff = ENGLISH_LETTER_FREQUENCY-fScore>= 0.0 ? ENGLISH_LETTER_FREQUENCY-fScore : fScore-ENGLISH_LETTER_FREQUENCY;
+					float fDiff = ENGLISH_LETTER_FREQUENCY-fScore>= 0.0 ? ENGLISH_LETTER_FREQUENCY-fScore : fScore-ENGLISH_LETTER_FREQUENCY;
 					//we only take those into account which a certain tolerance against the English letter frequency
-					if (fdiff<=STREAM_TOLERANCE_AGAINST_ENGLISH_LETTER_FREQUENCY) {
-						//if(fScore>fBestScore) {
-						fBestScore = fScore;
-						bAtLeastOneViableKeyFound = true;
-						(*keyscharacters[keylength])[startIndex].insert(pair<int,int>(keychar,1));
-						//}
+					if (fDiff<=STREAM_TOLERANCE_AGAINST_ENGLISH_LETTER_FREQUENCY) {
+						if (fDiff<=fMinDiff && fScore>fBestScore) {
+							fBestScore = fScore;
+							fMinDiff = fDiff;
+							bAtLeastOneViableKeyFound = true;
+							(*keyscharacters[keylength])[startIndex].insert(pair<int,int>(keychar,1));
+						}
 					}
 				}
 				fclose(fcIn);
@@ -348,7 +349,6 @@ int main() {
 				break;
 			}
 			else {
-				//std::cout << "\nKeychar found for index " << startIndex;
 				startIndex++;
 			}
 		}
@@ -361,7 +361,7 @@ int main() {
 	IterateThroughPromisingKeysAndDecrypt(promisingkeys,keyscharacters,pfile);
 	fclose(pfile);
 	//
-	std::cout << "-----------------------------------------------------------------\n";
+	std::cout << SECTION_SEPARATOR;
 	//tidy up the room before you leave:
 	for(int keylength=1;keylength<=textlen;keylength++) {
 		delete keyscharacters[keylength];
