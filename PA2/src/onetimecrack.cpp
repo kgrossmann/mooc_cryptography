@@ -33,6 +33,7 @@ static string cipher_messages[NO_OF_MESSAGES] = {"BB3A65F6F0034FA957F6A767699CE7
 						 "BC7570BBBF1D46E85AF9AA6C7A9CEFA9E9825CFD5E3A0047F7CD009305A71E"};
 
 //character gueesed by human reader: message (1-7), index(1-31),character
+/*
 static unsigned int number_of_human_guessed_plain_characters = 8;
 static string human_guessed_plain_characters[] = {"1", "1","I",
 						  "1", "9","n",
@@ -42,6 +43,7 @@ static string human_guessed_plain_characters[] = {"1", "1","I",
 						  "1", "31",".",
 						  "2","11","o",
 						  "5", "7","k"};
+*/
 //
 static unsigned char crackedkey[KEY_LENGTH];
 //
@@ -113,22 +115,31 @@ unsigned int WhichOneIsTheSpaceCharacter(unsigned char char1,unsigned int messag
 	return 0;
 }
 //
-void FillInKeyGapsByHumanGuessing() {
-	for(unsigned int i=0;i<number_of_human_guessed_plain_characters*3;i+=3) {
-		unsigned int message1Idx = atoi (human_guessed_plain_characters[i].c_str())-1;
-		unsigned int letterIdx = atoi (human_guessed_plain_characters[i+1].c_str())-1;
-		unsigned char plain_char = human_guessed_plain_characters[i+2][0];
+void FillInKeyGapsByHumanGuessing(unsigned int message1Idx,unsigned int letterIdx,unsigned char plain_char) {
+	//for(unsigned int i=0;i<number_of_human_guessed_plain_characters*3;i+=3) {
+		//unsigned int message1Idx = atoi (human_guessed_plain_characters[i].c_str())-1;
+		//unsigned int letterIdx = atoi (human_guessed_plain_characters[i+1].c_str())-1;
+		//unsigned char plain_char = human_guessed_plain_characters[i+2][0];
+	    message1Idx--;
+	    letterIdx--;
 		unsigned char cipher_char = ExtractCharFromCipherMessage(message1Idx,letterIdx);
 		unsigned char key_char = plain_char^cipher_char;
 		//human-guessed characters overwrite the previously calcualted ones
 		crackedkey[letterIdx] = key_char;
-	}
+	//}
 }
 //
 void DecryptAndPrint() {
 	char msgbuf[10];
+	std::cout << SECTION_SEPARATOR;
+	for(unsigned int k=0;k<KEY_LENGTH;k++) {
+		sprintf(msgbuf,"%X",crackedkey[k]);
+		std::cout << msgbuf;
+	}
+	std::cout << "\n";
 	for(unsigned int c=0;c<NO_OF_MESSAGES;c++) {
 		std::cout << SECTION_SEPARATOR;
+		std::cout << c+1 << " : ";
 		for(unsigned int i=0;i<KEY_LENGTH;i++) {
 			unsigned char cipher_char = ExtractCharFromCipherMessage(c,i);
 			unsigned char key_char = crackedkey[i];
@@ -137,7 +148,9 @@ void DecryptAndPrint() {
 			std::cout << msgbuf;
 		}
 		std::cout << "\n";
+		std::cout << "    "<< "1234567890123456789012345678901\n";
 	}
+	std::cout << SECTION_SEPARATOR;
 }
 //
 int main() {
@@ -165,8 +178,19 @@ int main() {
 		}
 	}
 	//
-	FillInKeyGapsByHumanGuessing();
-	DecryptAndPrint();
+	unsigned int messageIdx;
+	unsigned int letterIdx;
+	unsigned char plain_char;
+	while(1) {
+		DecryptAndPrint();
+		std::cout << "Enter your plain character guess as 'message,postion,character':\n";
+		scanf("%d,%d,%c",&messageIdx,&letterIdx,&plain_char);
+		if(messageIdx==0) break;
+		if(messageIdx<=7 && letterIdx>=1 && letterIdx<=31) {
+			FillInKeyGapsByHumanGuessing(messageIdx,letterIdx,plain_char);
+		}
+	}
+	std::cout << "Congrats and Good Bye!\n";
 	//
 	return 0;
 }
