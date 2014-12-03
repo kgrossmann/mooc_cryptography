@@ -7,8 +7,8 @@
 #include <cstring>
 using namespace std;
 
-#define MAX_LENGTH 		512
-#define BLOCK_LENGTH 	16
+#define MAX_LENGTH 512
+#define BLOCK_LENGTH 16
 static string attack_msg = "I, the server, hereby agree that I will pay $100 to this student";
 //
 void PrintOutTag(unsigned char* tag) {
@@ -52,11 +52,11 @@ int main(int argc, char *argv[]) {
 	for(unsigned int i=0;i<BLOCK_LENGTH;i++) taggedmessage[i] = tag[i]^message[2*BLOCK_LENGTH+i];
 	//the second block of the next 2-block message to send is the 4th block of the text
 	for(unsigned int i=0;i<BLOCK_LENGTH;i++) taggedmessage[BLOCK_LENGTH+i] = message[3*BLOCK_LENGTH+i];
-	//sending this 2-block message, with the fist input message being
-	//the calculated input to the third block cipher in the chains, gives the
-	//tag for attack message
+	//sending this 2-block message, with the first input message being
+	//the input to the third block cipher in the MAC chain, gives the
+	//forged tag for the attack message
 	LetOracleTagMessage(taggedmessage,2*BLOCK_LENGTH,tag);
-	//sending that tag along with the attack message should verify correctly
+	//sending that tag along with the attack message should becverified with success
 	LetOracleVerifyTagAndMessage(message,msglen,tag);
 	//
 	Oracle_Disconnect();
