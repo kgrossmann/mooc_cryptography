@@ -1,10 +1,3 @@
-//============================================================================
-// Name        : cbcmacattack.cpp
-// Author      : Klemens Grossmann
-// Version     :
-// Copyright   :
-// Description : Forged (messae,tag)-attack on basic CBC-MAC scheme
-//============================================================================
 #include "oracle.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -12,11 +5,10 @@
 #include <iostream>
 #include <cstdlib>
 #include <cstring>
-
 using namespace std;
 
-#define MAX_LENGTH 512
-#define BLOCK_LENGTH 16
+#define MAX_LENGTH 		512
+#define BLOCK_LENGTH 	16
 static string attack_msg = "I, the server, hereby agree that I will pay $100 to this student";
 //
 void PrintOutTag(unsigned char* tag) {
@@ -50,24 +42,16 @@ int main(int argc, char *argv[]) {
 
 	memset(message,0,MAX_LENGTH);
 	memset(taggedmessage,0,MAX_LENGTH);
-	for(unsigned int i=0;i<msglen;i++) {
-		message[i] = attack_msg[i];
-	}
-	//1. send the first two blocks to the MAC oracle a get the intermediate tag in the
+	for(unsigned int i=0;i<msglen;i++) 	message[i] = attack_msg[i];
+	//send the first two blocks to the MAC oracle and retrieve the intermediate tag in the
 	//CBC-MAC chain
-	for(unsigned int i=0;i<2*BLOCK_LENGTH;i++) {
-		taggedmessage[i] = message[i];
-	}
+	for(unsigned int i=0;i<2*BLOCK_LENGTH;i++) taggedmessage[i] = message[i];
 	LetOracleTagMessage(taggedmessage,2*BLOCK_LENGTH,tag);
-	//the xor of the thirst message block with this intermediate tag gives the first block
+	//the XOR of the thirst message block with this intermediate tag gives the first block
 	//of the next 2-block message to send to the MAC oracle for retrieving the final forged tag
-	for(unsigned int i=0;i<BLOCK_LENGTH;i++) {
-		taggedmessage[i] = tag[i]^message[2*BLOCK_LENGTH+i];
-	}
+	for(unsigned int i=0;i<BLOCK_LENGTH;i++) taggedmessage[i] = tag[i]^message[2*BLOCK_LENGTH+i];
 	//the second block of the next 2-block message to send is the 4th block of the text
-	for(unsigned int i=0;i<BLOCK_LENGTH;i++) {
-		taggedmessage[BLOCK_LENGTH+i] = message[3*BLOCK_LENGTH+i];
-	}
+	for(unsigned int i=0;i<BLOCK_LENGTH;i++) taggedmessage[BLOCK_LENGTH+i] = message[3*BLOCK_LENGTH+i];
 	//sending this 2-block message, with the fist input message being
 	//the calculated input to the third block cipher in the chains, gives the
 	//tag for attack message
