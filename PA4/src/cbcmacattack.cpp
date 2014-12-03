@@ -1,9 +1,9 @@
 //============================================================================
 // Name        : cbcmacattack.cpp
-// Author      : Klemens Gro?mann
+// Author      : Klemens Grossmann
 // Version     :
-// Copyright   : Your copyright notice
-// Description : Hello World in C++, Ansi-style
+// Copyright   :
+// Description : Forged (messae,tag)-attack on basic CBC-MAC scheme
 //============================================================================
 #include "oracle.h"
 #include <stdio.h>
