@@ -28,50 +28,55 @@ void PrintOutTag(unsigned char* tag) {
 }
 //
 void LetOracleTagMessage(unsigned char* message, unsigned int msglen, unsigned char* tag) {
-	Oracle_Connect();
 	Mac(message,(int)msglen,tag);
-	Oracle_Disconnect();
 }
 //
 void LetOracleVerifyTagAndMessage(unsigned char* message, unsigned int msglen, unsigned char* tag) {
-	Oracle_Connect();
 	if (Vrfy(message,(int)msglen, tag)) {
 		printf("Message verified successfully!\n");
 	} else {
 		printf("Message verficiation failed.\n");
 	}
-	Oracle_Disconnect();
 }
 //
 int main(int argc, char *argv[]) {
 	cout << "MOOC Cryptography - PA4" << endl;
-	//
 	unsigned char message[MAX_LENGTH];
 	unsigned char taggedmessage[MAX_LENGTH];
 	unsigned char tag[BLOCK_LENGTH];
 	unsigned int  msglen = attack_msg.size();
+
+	Oracle_Connect();
+
 	memset(message,0,MAX_LENGTH);
 	memset(taggedmessage,0,MAX_LENGTH);
 	for(unsigned int i=0;i<msglen;i++) {
 		message[i] = attack_msg[i];
 	}
-	//1. send the first two blocks to the MAC oracle a get the intermediate tag
+	//1. send the first two blocks to the MAC oracle a get the intermediate tag in the
+	//CBC-MAC chain
 	for(unsigned int i=0;i<2*BLOCK_LENGTH;i++) {
 		taggedmessage[i] = message[i];
 	}
-	//
 	LetOracleTagMessage(taggedmessage,2*BLOCK_LENGTH,tag);
-	//the xor of the thirst message block with the intermediate tag gives the first block
-	//of the next message to send to the MAC oracle:
+	//the xor of the thirst message block with this intermediate tag gives the first block
+	//of the next 2-block message to send to the MAC oracle for retrieving the final forged tag
 	for(unsigned int i=0;i<BLOCK_LENGTH;i++) {
 		taggedmessage[i] = tag[i]^message[2*BLOCK_LENGTH+i];
 	}
-	//the second block of the next message to send is the 4th block of the text
+	//the second block of the next 2-block message to send is the 4th block of the text
 	for(unsigned int i=0;i<BLOCK_LENGTH;i++) {
 		taggedmessage[BLOCK_LENGTH+i] = message[3*BLOCK_LENGTH+i];
 	}
+	//sending this 2-block message, with the fist input message being
+	//the calculated input to the third block cipher in the chains, gives the
+	//tag for attack message
 	LetOracleTagMessage(taggedmessage,2*BLOCK_LENGTH,tag);
+	//sending that tag along with the attack message should verify correctly
 	LetOracleVerifyTagAndMessage(message,msglen,tag);
+	//
+	Oracle_Disconnect();
+	//
 	PrintOutTag(tag);
 	return 0;
 }
