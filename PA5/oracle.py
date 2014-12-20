@@ -1,4 +1,5 @@
-sign_sock = None
+
+ign_sock = None
 vrfy_sock = None
 
 MAX_PACKET_LEN = 8192
@@ -15,22 +16,22 @@ def Oracle_Connect():
         sign_sock.connect(('54.165.60.84', 8080))
         vrfy_sock.connect(('54.165.60.84', 8081))
     except socket.error as e:
-        print e
+        print(e)
         return -1
 
-    print "Connected to server successfully."
+    print("Connected to server successfully.")
 
     return 0
 
 def Oracle_Disconnect():
     if not sign_sock or not vrfy_sock:
-        print "[WARNING]: You haven't connected to the server yet."
+        print("[WARNING]: You haven't connected to the server yet.")
         return -1
 
     sign_sock.close()
     vrfy_sock.close()
 
-    print "Connection closed successfully."
+    print("Connection closed successfully.")
 
     return 0
 
@@ -38,15 +39,16 @@ def Oracle_Disconnect():
 # Message may be either a long integer, or a binary string
 def Sign(msg):
     if not sign_sock or not vrfy_sock:
-        print "[WARNING]: You haven't connected to the server yet."
+        print("[WARNING]: You haven't connected to the server yet.")
         return -1
     if msg < 0:
-        print "[ERROR]: Message cannot be negative!"
+        print("[ERROR]: Message cannot be negative!")
 
-    if type(msg) is long or type(msg) is int:
+    if type(msg) is int:
         msg = bin(msg)[2:]
 
-    pkt = msg + "X"
+    pkt = bytes(msg + "X", "utf-8")
+    
     sign_sock.send(pkt)
 
     resp = sign_sock.recv(MAX_PACKET_LEN)
@@ -56,9 +58,9 @@ def Sign(msg):
         sigma = int(resp)
 
     if sigma == NOT_BINARY_STR_ERR:
-        print "[ERROR]: Message was not a valid binary string."
+        print("[ERROR]: Message was not a valid binary string.")
     if sigma == ORIGINAL_MSG_ERR:
-        print "[ERROR]: You cannot request a signature on the original messgae!"
+        print("[ERROR]: You cannot request a signature on the original message!")
 
     return sigma
 
@@ -66,24 +68,24 @@ def Sign(msg):
 # Message and signature may be either long integers, or binary strings
 def Verify(msg, sigma):
     if not sign_sock or not vrfy_sock:
-        print "[WARNING]: You haven't conected to the server yet."
+        print("[WARNING]: You haven't conected to the server yet.")
         return -1
     if msg < 0 or sigma < 0:
-        print "[ERROR]: Message and signature cannot be negative!"
+        print("[ERROR]: Message and signature cannot be negative!")
         return -1
 
-    if type(msg) is long or type(msg) is int:
+    if type(msg) is int:
         msg = bin(msg)[2:]
-    if type(sigma) is long or type(msg) is int:
+    if type(sigma) is int:
         sigma = bin(sigma)[2:]
 
-    pkt = msg + ":" + sigma + "X"
+    pkt = bytes(msg + ":" + sigma + "X", "utf-8")
     vrfy_sock.send(pkt)
 
     match = int(vrfy_sock.recv(MAX_PACKET_LEN))
 
     if match == NOT_BINARY_STR_ERR:
-        print "[ERROR]: Message and/or signature were not valid binary strings."
+        print("[ERROR]: Message and/or signature were not valid binary strings.")
     elif match == MISSING_DELIMITER_ERR:
-        print "[ERROR]: Missing delimiter between message and signature."
+        print("[ERROR]: Missing delimiter between message and signature.")
     return match
