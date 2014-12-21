@@ -5,7 +5,7 @@ from helper import *
 from decimal import Decimal
 from helper import modinv
 #
-msg = "Crypto is tard --- even schemes that look complex can be broken"     
+msg = "Crypto is hard --- even schemes that look complex can be broken"     
 #
 # RSA key (decimal)
 N = 119077393994976313358209514872004186781083638474007212865571534799455802984783764695504518716476645854434703350542987348935664430222174597252144205891641172082602942313168180100366024600206994820541840725743590501646516068078269875871068596540116450747659687492528762004294694507524718065820838211568885027869
@@ -41,9 +41,9 @@ assert(N>mu*m2)
 assert(N>m1*m2)
 #
 Oracle_Connect()
-sigmaok = Sign(m)
-assert(sigmaok>=0 and sigmaok<N)
-PrintSomethingOutHex("sigmaok",sigmaok)
+#sigmaok = Sign(m)
+#assert(sigmaok>=0 and sigmaok<N)
+#PrintSomethingOutHex("sigmaok",sigmaok)
 sigma1 = Sign(m1)
 assert(sigma1>=0 and sigma1<N)
 PrintSomethingOutHex("sigma1",sigma1)
@@ -57,11 +57,15 @@ PrintSomethingOutHex("sigma_mu",sigma_mu)
 sigma1_e = pow(sigma1,e,N)
 sigma2_e = pow(sigma2,e,N)
 sigma_mu_e = pow(sigma_mu,e,N)
-assert(sigma1_e*sigma2_e//sigma_mu_e == mu*m1*m2)
+sigma_e = sigma1_e*sigma2_e//sigma_mu_e
+PrintSomethingOutHex("sigma_e",sigma_e)
+assert(sigma_e==mu*m1*m2)
 #if the above is true, can we not derive the following?
-sigma = (sigma1*sigma2//sigma_mu)%N      
+sigma_mu_inv = modinv(sigma_mu,N)
+sigma =  (sigma1*sigma2*sigma_mu_inv)%N
+assert(sigma<N)
 PrintSomethingOutHex("sigma",sigma)   
-PrintSomethingOutDec("sigmaok/sigma",Decimal(sigmaok/sigma))
+#PrintSomethingOutDec("sigmaok/sigma",Decimal(sigmaok/sigma))
 #
 if Verify(m,sigma):
    print("Well done!")
