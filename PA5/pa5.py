@@ -69,8 +69,8 @@ assert(sigma1_e*sigma2_e//sigma_mu_e==mu*m1*m2)
 #
 #   [sigma(m1)*sigma(m2)/sigma(1) mod N]
 #
-# However, most importantly, modulo division by 'b' is done by
-# multiplying with the modulo inverse of 'b', that is b^-1 = modinv(b,N)
+# Modulo division by 'b' is done by multiplying with the modulo inverse of 'b', that
+# is b^-1 = modinv(b,N)
 # Hence, we have to multiply by modinv(sigma_mu,N):
 #
 sigma_mu_inv = modinv(sigma_mu,N)
