@@ -1,25 +1,26 @@
-import sys
-import math
 from oracle import *
-from helper import *
-from decimal import Decimal
 from helper import modinv
 # Launches a forgery attacked on a shifted-and-concatenated message RSA signature scheme,
 # based on a plain RSA signature
 # This is the message to be fordeg on the verification oracle
 msg = "Crypto is hard --- even schemes that look complex can be broken"     
 #
-# public RSA key (decimal)
+# public RSA key:
 e = 65537
-N = 119077393994976313358209514872004186781083638474007212865571534799455802984783764695504518716476645854434703350542987348935664430222174597252144205891641172082602942313168180100366024600206994820541840725743590501646516068078269875871068596540116450747659687492528762004294694507524718065820838211568885027869
-# the shift-and-concatenation scheme P(m) is defined as P(m) = µ*m + r, where µ is the shift-and-concatenation coefficient, and r is a padding coefficient
+N0 = '119077393994976313358209514872004186781083638474007212865\
+571534799455802984783764695504518716476645854434703350542987348\
+935664430222174597252144205891641172082602942313168180100366024\
+600206994820541840725743590501646516068078269875871068596540116\
+450747659687492528762004294694507524718065820838211568885027869'
+N = int(N0)
+# the shift-and-concatenation scheme P(m) is defined as P(m) = µ*m + r, where µ is the shift-and-concatenation
+# coefficient, and r is a padding coefficient
 # Here, with the restructered message M = 0x00|m(as 63 bytes)|0x00|m(as 63 bytes), r=0 and µ=2**(64*8)+1
 mu = 2**(64*8)+1
 #
 def CalculateMessageValue(message):
     val = 0    
     for ch in message:
-       #print(ch)
        val = val<<8
        val = val + ord(ch)    
     return val   
@@ -42,7 +43,7 @@ assert(N>mu*m2)
 assert(N>m1*m2)
 # connect to python oracle
 Oracle_Connect()
-# we request the signatures of both messages m1 and m2, and for a message = 1, which signature
+# We request the signatures of both messages m1 and m2, and for a message = 1, which signature
 # sign(1) = [mu^d mod N], a term we need later in our calculation of sign(m)
 # we can request it from the signing oracle, because 'mu' "happens to have" the required message
 # format 0x00|1(as 63 bytes)|0x00|1(as 63 bytes)
@@ -57,7 +58,8 @@ assert(pow(sigma_mu,e,N)==mu)
 #
 #   (sigma(m)^e = sigma(m1)^e*sigma(m2)^e/sigma(1)^e) = mu*m1*m2)
 #
-# we canverfiy the equation's validity here via an assert (not really neccessary, just to confirm)
+# we can verfiy the equation's validity here via an assert (not neccessary, just to
+# confirm)
 sigma1_e = pow(sigma1,e,N)
 sigma2_e = pow(sigma2,e,N)
 sigma_mu_e = pow(sigma_mu,e,N)
